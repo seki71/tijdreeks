@@ -1,0 +1,942 @@
+Slide count: 59
+
+--- SLIDE 1 ---
+Time Series Analysis
+Minor Data Science
+
+--- SLIDE 2 ---
+Timeseries
+:
+Timeseries example
+
+--- SLIDE 3 ---
+Timeseries
+# take the differnces
+tmpdiff<-diff
+(
+x, differences
+=
+1
+)
+https://cran.r-project.org/web/packages/tsoutliers/tsoutliers.pdf
+https://pkg.robjhyndman.com/forecast/reference/tsclean.html
+
+--- SLIDE 4 ---
+Doelen voor vandaag
+Verschil:
+supervised
+machine
+learning
+en tijdreeksanalyse
+Verschillende soorten tijdreeksen
+Eigenschappen van een tijdreeks
+Exponential
+smoothing
+ARIMA
+
+--- SLIDE 5 ---
+Verschil: Machine Learning en Tijdreeksen
+Supervised
+Machine Learning
+X1
+X2
+X3
+X4
+Y
+0
+AMS
+35
+2.541
+25000
+1
+UTR
+38
+9.234
+40000
+Tijdreeks
+Time
+Y
+12:00
+25000
+13:00
+40000
+
+--- SLIDE 6 ---
+https://www.smlease.com/entries/technology/applications-of-iot-in-manufacturing/
+In de praktijk voor PM wordt er meestal 1D data gebruikt via sensoren
+
+--- SLIDE 7 ---
+Voorbeelden van tijdreeksen
+https://otexts.com/fpp2/
+
+--- SLIDE 8 ---
+Dit is een schets van de pijplijn die de data aflegt voordat het bij ons (Data
+analytics
+tools) terecht komt.
+Gedurende de pijplijn kan er aan de data gesleuteld zijn of anders zou je er nog aan moeten sleutelen.
+https://www.researchgate.net/publication/282500856_Designing_a_Data_Management_Pipeline_for_Pervasive_Sensor_Communication_Systems/figures
+
+--- SLIDE 9 ---
+Wat is
+een
+Timeseries
+9
+
+--- SLIDE 10 ---
+Wat is
+een
+Tijdreeks
+/Timeseries?
+Een tijdreeks
+Xt
+is een
+verzameling van waarnemingen
+, elk gedaan op een specifiek tijdstip t.
+De verzameling T van tijdstippen zou continu kunnen zijn, maar wij zullen uitgaan van een discrete verzameling T.
+Sterker nog, we zullen uitgaan van tijdreeksen met waarnemingen op een
+vaste afstand
+van elkaar.
+
+--- SLIDE 11 ---
+[geen extraheerbare tekst]
+
+--- SLIDE 12 ---
+Een tijdreeks is meestal een samenstelling van componenten
+Voor het beschrijven van een tijdreeks maken we gebruik van vier componenten.
+De trend (T)
+geeft de globale beschrijving van de stijging of daling van een tijdreeks.
+De seizoencomponent (S)
+geeft het cyclische gedrag van de tijdreeks. De periode van dit gedrag hoort constant en bekend te zijn.
+De conjunctuurcomponent (C)
+omvat schommelingen die langer duren dan een jaar en vaak samenhangen met economische cycli zoals recessies en uitbreidingen. Dit is anders dan
+seizoenspatronen
+omdat het niet strikt regelmatig terugkeert en minder voorspelbaar is.
+De toevallige/irrationele component (I)
+is het gedrag dat we niet kunnen beschrijven met de drie andere componenten.
+
+--- SLIDE 13 ---
+Omgaan met
+NAN’s
+voor Tijdreeksen
+13
+
+--- SLIDE 14 ---
+Omgaan met Missing Data in python:					het ontstaan van
+NA’s
+Beschouw de volgende tijdreeks
+wat is er mis?
+http://publish.illinois.edu/spencer-guerrero/2014/12/11/2-dealing-with-missing-data-in-r-omit-approx-or-spline-part-1/
+Tijdreeks
+=
+pd.
+D
+ataframe
+(
+jaar
+=
+rep
+(
+2015
+,
+10
+)
+,
+maand
+=
+c
+(
+1
+:
+5
+,
+7
+:
+9
+,
+11
+:
+12
+)
+,
+waarde
+=
+np.random.rand
+(
+10
+))
+Hoewel er geen
+NA
+’s
+zijn is de reeks, zit er niet dezelfde afstand tussen de waarnemingen`
+
+--- SLIDE 15 ---
+Omgaan met Missing Data in python:		het ontstaan van
+NA’s
+Beschouw de volgende tijdreeks
+wat is er mis?
+http://publish.illinois.edu/spencer-guerrero/2014/12/11/2-dealing-with-missing-data-in-r-omit-approx-or-spline-part-1/
+Hoewel er geen
+NA
+’s
+zijn is de reeks, zit er niet dezelfde afstand tussen de waarnemingen`
+1
+2
+3
+4
+5
+7
+8
+9
+11
+12
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+De oplossing
+
+--- SLIDE 16 ---
+Omgaan met Missing Data in Python:
+Omit
+? Of
+locf
+,
+Approx
+, or
+Spline
+Eerder hebben we gedefinieerd:
+Sterker nog, we zullen uitgaan van tijdreeksen met waarnemingen op een
+vaste afstand
+van elkaar.
+Maar wat nu als je
+NA
+hebt, dan heb je of
+een gat in je series (wel tijdpunt behouden,
+NA
+als waarde)
+Niet meer een vaste  afstand tussen opvolgende punten (als je
+NA
+verwijdert)
+http://publish.illinois.edu/spencer-guerrero/2014/12/11/2-dealing-with-missing-data-in-r-omit-approx-or-spline-part-1/
+
+--- SLIDE 17 ---
+Omgaan met Missing Data in
+Pandas
+: 	pad
+bfill
+,
+interpolate
+Pandas
+package heeft 3 functies die helpen bij
+NA’s
+in timeseries
+pad()->
+laatste waarneming voortgezet
+bfill
+()->
+backward
+fill
+Interpolate
+->
+lineaire of
+polynomiale
+interpolatie
+Let op: de paarse/groene punten zijn twee aparte trends
+
+--- SLIDE 18 ---
+Timeseries Decompositie
+18
+
+--- SLIDE 19 ---
+Opbouw van timeseries
+Additive:
+Time series = Seasonal + Trend + Random
+https://anomaly.io/seasonal-trend-decomposition-in-r/
+Multiplicative:
+Time series = Trend * Seasonal *Random
+kijk goed naar de twee figuren en vertel hoe je het verschil ziet
+
+--- SLIDE 20 ---
+https://drsifu.wordpress.com/2012/11/27/time-series-econometrics/
+Is het gemiddelde constant?
+Het gemiddelde van de reeks mag geen functie van de tijd zijn
+Is de variantie constant?
+De variantie van de reeks mag geen functie van de tijd zijn
+3. Is de covariantie constant?
+De covariantie van de i-de term en de (i + m)-de term mag geen functie van de tijd zijn, (mag wel functie
+van
+lags
+zijn)
+Om een tijdreeks te analyseren moet deze stationair zijn
+
+--- SLIDE 21 ---
+https://www.analyticsvidhya.com/blog/2015/12/complete-tutorial-time-series-modeling/
+Het gemiddelde van de reeks mag geen functie van de tijd zijn, maar moet een constante zijn. De afbeelding hieronder toont de linker grafiek die voldoet aan de voorwaarde, terwijl de grafiek in het rood een tijdsafhankelijk gemiddelde heeft.
+De variantie van de reeks mag geen functie van tijd zijn. Deze eigenschap staat bekend als
+homoscedasticiteit
+. De volgende grafiek toont wat een stationaire reeks is en wat niet. (Let op de variërende spreiding van de distributie in de grafiek aan de rechterkant)
+De covariantie van de i-de term en de (i + m)-de term mag geen functie van tijd zijn. In de volgende grafiek ziet u dat de spreiding dichter bij elkaar komt naarmate de tijd toeneemt. Daarom is de covariantie niet constant met de tijd voor de 'rode reeks'.
+
+--- SLIDE 22 ---
+https://drsifu.wordpress.com/2012/11/27/time-series-econometrics/
+Zijn de onderstaande reeksen stationair?
+
+--- SLIDE 23 ---
+Zijn de onderstaande reeksen stationair?
+https://drsifu.wordpress.com/2012/11/27/time-series-econometrics/
+
+--- SLIDE 24 ---
+Handmatige
+decompositie van een
+additieve
+tijdreeks (6 stappen)
+Stap 1: Importeer en converteer de data
+Stap 2: detecteer de trend
+Doe een
+moving
+average
+met een
+window
+gelijk aan de frequentie (kwartaal data
+bijv
+) en separeer de trend.
+
+--- SLIDE 25 ---
+Handmatige
+decompositie van een
+additieve
+tijdreeks (6 stappen)
+Stap 3: haal de trend uit de tijdreeks
+Stap 4: haal
+seizoenseffecten
+eruit
+Het makkelijkst is het gemiddelde
+seizoenseffect
+te berekenen door een matrix te maken van de frequentie en de gemiddelden per kolom maken
+Let op het verschil tussen
+multiplicatief
+en additief
+
+--- SLIDE 26 ---
+Handmatige
+decompositie van een
+additieve
+tijdreeks (6 stappen)
+Stap 5: onderzoek het random effect
+Stap 6: reconstrueer het signaal (om te checken)
+Let op het verschil tussen
+multiplicatief
+en additief
+random_bier
+=
+timeserie_bier
+-
+trend_bier
+-
+seasonal_bier
+plot
+(
+as.ts
+(
+random_bier
+))
+recomposed_bier
+=
+trend_bier
++
+seasonal_bier
++
+random_bier
+plot
+(
+as.ts
+(
+recomposed_bier
+))
+
+--- SLIDE 27 ---
+Automatische
+decompositie van een
+additieve
+tijdreeks
+Let op het verschil tussen
+multiplicatief
+en
+additief
+from
+random import randrange
+from
+pandas
+import Series
+from
+matplotlib
+import
+pyplot
+from
+statsmodels.tsa.seasonal
+import
+seasonal_decompose
+series = [
+i+randrange
+(10)
+for
+i in range(1,100)]
+result
+=
+seasonal_decompose
+(series, model=
+'additive
+',
+period
+=1)
+result.plot
+()
+pyplot.show
+(
+)
+
+--- SLIDE 28 ---
+Fourier Analyse
+28
+
+--- SLIDE 29 ---
+https://realpython.com/python-scipy-fft/
+Maar
+wat nu als je frequentie v/d seizoensinvloed niet weet?
+De
+Fourier
+transformatie in Python
+https://anomaly.io/detect-seasonality-using-fourier-transform-r/
+https://realpython.com/python-scipy-fft/
+Let op: de sinusgolven en de pianotoetsen komen niet overeen met elkaar
+
+--- SLIDE 30 ---
+https://realpython.com/python-scipy-fft/
+Maar
+wat nu als je frequentie
+s
+niet weet?
+Time Domain vs Frequency Domain
+https://anomaly.io/detect-seasonality-using-fourier-transform-r/
+https://realpython.com/python-scipy-fft/
+Denk hierbij aan de machine die over de tijd een set van trillingen geeft
+Denk aan het samplen van een stukje van deze set
+Dit is waar een sample stukje audio / trilling uit opgebouwd is.
+Dus zou je kunnen kijken naar ongewenste/nieuwe frequenties die eerder in een sample nog niet voorkwamen
+
+--- SLIDE 31 ---
+Maar
+wat nu als je frequentie
+vd
+seizoensinvloed niet weet?
+De
+Fourier
+transformatie – dummy
+style
+uitgelegd
+De
+Fourier
+transformatie breekt een signaal uiteen naar alle mogelijke frequenties waar het signaal uit bestaat:
+een sinus
+een samengesteld signaal
+Het resultaat is een grafiek waarbij de pieken de frequenties van de seizoensinvloed zijn, denk erom frequentie dus
+T = 1 / f
+Sin
+(
+ϖt
+)
+
+--- SLIDE 32 ---
+Graag zorgen dat je
+deze geniale uitleg
+kijkt
+
+--- SLIDE 33 ---
+Praktisch voorbeeld: ongewenste ruis uit audio verwijderen
+import
+numpy
+as
+np
+from
+matplotlib
+import
+pyplot
+as
+plt
+SAMPLE_RATE
+=
+44100
+# Hertz
+DURATION
+=
+5
+#
+Seconds
+def
+generate_sine_wave
+(
+freq
+,
+sample_rate
+,
+duration
+):
+x
+=
+np
+.
+linspace
+(
+0
+,
+duration
+,
+sample_rate
+*
+duration
+,
+endpoint
+=
+False
+)
+frequencies
+=
+x
+*
+freq
+# 2pi
+because
+np.sin
+takes
+radians
+y
+=
+np
+.
+sin
+((
+2
+*
+np
+.
+pi
+)
+*
+frequencies
+)
+return
+x,
+y
+#
+Generate
+a 2 hertz sine wave
+that
+lasts
+for
+5
+seconds
+x,
+y
+=
+generate_sine_wave
+(
+2
+,
+SAMPLE_RATE,
+DURATION)
+plt
+.
+plot
+(x,
+y)
+plt
+.
+show
+()
+https://realpython.com/python-scipy-fft/
+
+--- SLIDE 34 ---
+Praktisch voorbeeld: ongewenste ruis uit audio verwijderen
+_,
+nice_tone
+=
+generate_sine_wave
+(
+400
+,
+SAMPLE_RATE,
+DURATION)
+_,
+noise_tone
+=
+generate_sine_wave
+(
+4000
+,
+SAMPLE_RATE,
+DURATION)
+noise_tone
+=
+noise_tone
+*
+0.3
+mixed_tone
+=
+nice_tone
++
+noise_tone
+normalized_tone
+=
+np
+.
+int16((
+mixed_tone
+/
+mixed_tone
+.
+max
+())
+*
+32767
+)
+plt
+.
+plot
+(
+normalized_tone
+[:
+1000
+])
+plt
+.
+show
+()
+Het signaal ziet eruit als een vervormde sinusgolf. De sinusgolf die u ziet is de 400 Hz toon die u genereerde, en de vervorming is de 4000 Hz toon. Als u goed kijkt, dan kunt u zien dat de vervorming de vorm heeft van een sinusgolf.
+https://realpython.com/python-scipy-fft/
+
+--- SLIDE 35 ---
+Praktisch voorbeeld: ongewenste ruis uit audio verwijderen
+from
+scipy.fft
+import
+rfft
+,
+rfftfreq
+#
+Note
+the
+extra 'r' at
+the
+front
+yf
+=
+rfft
+(
+normalized_tone
+)
+xf
+=
+rfftfreq
+(N,
+1
+/
+SAMPLE_RATE)
+plt
+.
+plot
+(
+xf
+,
+np
+.
+abs
+(
+yf
+))
+plt
+.
+show
+()
+Het signaal ziet eruit als een vervormde sinusgolf. De sinusgolf die u ziet is de 400 Hz toon die u genereerde, en de vervorming is de 4000 Hz toon. Als u goed kijkt, dan kunt u zien dat de vervorming de vorm heeft van een sinusgolf.
+https://realpython.com/python-scipy-fft/
+
+--- SLIDE 36 ---
+Analyse van de Timeseries
+36
+
+--- SLIDE 37 ---
+Difference
+/integratie gebruiken voor analyse timeseries
+Soms is het handiger om te kijken naar de
+Δ
+tussen twee tijdstappen ipv de absolute waarde.
+
+--- SLIDE 38 ---
+Verdeling maken van de ruis
+hist
+(
+decompose_bier
+$
+random
+)
+
+--- SLIDE 39 ---
+Het Autoregressief (AR) Model
+X(t) = Rho*X(t-1) + Er(t)
+Neem de volgende functie
+Als
+Rho = 0
+dan is het resultaat een heerlijk stuk witte ruis
+
+--- SLIDE 40 ---
+Het Autoregressief (AR) Model
+X(t) = Rho*X(t-1) + Er(t)
+Neem de volgende functie
+Als
+Rho = 0.5
+wat voor verschil zie je dan?
+
+--- SLIDE 41 ---
+Het Autoregressief (AR) Model
+X(t) = Rho*X(t-1) + Er(t)
+Neem de volgende functie
+Als
+Rho = 0.9
+wat voor verschil zie je nu?
+
+--- SLIDE 42 ---
+Het Autoregressief (AR) Model
+X(t) = Rho*X(t-1) + Er(t)
+Neem de volgende functie
+Als
+Rho = 1.0
+dan hebben we een
+random walk
+Die niet stationair is want
+E[X(t)] = Rho *E[ X(t-1)]
+
+--- SLIDE 43 ---
+Een mooi voorbeeld van een AR(1) model
+Het
+bruto nationaal product
+(
+bnp
+) is de waarde van alle goederen en diensten die in een bepaalde periode (meestal een jaar) door een bepaald land worden geproduceerd: het
+bruto binnenlands product
+plus de door de staatsburgers in het buitenland verdiende primaire inkomens minus de door buitenlanders in het betreffende land verdiende primaire inkomens.
+De hypothese is dat
+BNP(t) =
+alpha
+*BNP(t–1) + error (t)
+
+--- SLIDE 44 ---
+Tweede voorbeeld AR(1)
+Stel je verkoopt een product
+X
+met een stabiele verkoop van
+X
+0
+.
+Op een gegeven moment maak je reclame op
+t=9
+waardoor de verkopen stijgen. Een
+alpha
+%
+van de klanten die het product kopen, kopen je product nog een keer. Het verloop van je verkoop ziet er dan als volgt uit.
+
+--- SLIDE 45 ---
+Autoregressie (AR) en
+Moving
+Average
+(MA)
+Autoregressieve
+modellen hebben de vorm
+Waarbij een nieuwe waarde wordt bepaald door voorgaande waardes (vermenigvuldigd met een coëfficiënt) plus een error.
+Moving
+Average
+modellen hebben de vorm
+Waarbij de nieuwe waarde wordt bepaald door de
+error
+in voorgaande waardes.
+
+--- SLIDE 46 ---
+[geen extraheerbare tekst]
+
+--- SLIDE 47 ---
+Welk model hebben we mee te maken
+Zodra je een stationair proces hebt (decompositie) moet je je afvragen met welk type model je te maken hebt (i) ruis, (ii) AR, (iii) MA, (iv) anders. Dit vinden we door de correlatie tussen
+X
+t
+en
+X
+(t-n)
+te onderzoeken.
+We onderscheiden de
+volgende functies:
+ACF  = auto correlatie functie
+PACF = partiele correlatie functie (ACF minus
+lags
+)
+h = AR/MA niveau
+Bijvoorbeeld: AR(h) of MA(h)
+
+--- SLIDE 48 ---
+Welk model hebben we mee te maken
+Timeseries 1 geeft onderstaande plot
+Timeseries 2 geeft onderstaande plot
+Duidelijk een AR(1) model:
+Exponentieel aflopende ACF
+PACF is niet meer significant
+na
+1
+Let op: de eerste x-waarde is 0, dus correlatie met zijzelf, wat altijd 1 is
+https://www.analyticsvidhya.com/blog/2015/12/complete-tutorial-time-series-modeling/
+Duidelijk een MA(1) model:
+Exponentieel aflopende PACF
+ACF is niet meer significant
+na
+1
+Let op:
+de eerste x-waarde is 0 (zie links)
+
+--- SLIDE 49 ---
+Welk model hebben we mee te maken
+http://stats.stackexchange.com/questions/45539/ar1-selection-using-sample-acf-pacf
+Hoe zou witte ruis eruit zien??
+
+--- SLIDE 50 ---
+Autocorrelatie: ACF en PACF
+ACF laat autocorrelatie zien voor verschillende
+lags
+. Partiele autocorrelatie is directe relatie met lag
+k
+zien, dus na verwijderen van tussenliggende correlaties.
+
+--- SLIDE 51 ---
+Exponential
+Smoothing
+De voorspelling is een gewogen gemiddelde van alle voorgaande datapunten waarbij gewicht exponentieel afneemt in de tijd.
+Double
+exponential
+smoothing
+neemt een aparte bijdrage voor de TREND mee en triple
+exponential
+smoothing
+ook voor de SEIZOENS bijdrage.
+
+--- SLIDE 52 ---
+Exponential
+Smoothing
+De voorspelling is een gewogen gemiddelde van alle voorgaande datapunten waarbij gewicht exponentieel afneemt in de tijd.
+Double
+exponential
+smoothing
+neemt een aparte bijdrage voor de TREND mee en triple
+exponential
+smoothing
+ook voor de
+SEIZOENSbijdrage
+.
+α
+waarde
+Effect op
+smoothing
+Reactiesnelheid model
+Dicht bij 1
+Snelle aanpassing, veel gewicht op recente data
+Hoge gevoeligheid, weinig gladstrijking
+Dicht bij 0
+Trage aanpassing, veel gewicht op verleden
+Sterke
+gladstrijking
+, minder gevoelig voor ruis
+
+--- SLIDE 53 ---
+Exponential
+Smoothing
+De voorspelling is een gewogen gemiddelde van alle voorgaande datapunten waarbij gewicht exponentieel afneemt in de tijd.
+Double
+exponential
+smoothing
+neemt een aparte bijdrage voor de TREND mee en triple
+exponential
+smoothing
+ook voor
+de SEIZOENS bijdrage
+.
+
+--- SLIDE 54 ---
+ARIMA
+(
+AutoRegressive
+Integrated
+Moving
+Average
+)
+Als je de AR en MA componenten samenvoegt kan je een voorspelmodel maken. Voorwaarde is dat de tijdreeks ‘stationair’ is, oftewel dat hij deze eigenschappen heeft die onafhankelijk zijn van het moment dat je hem waarneemt (constante gemiddelde en variantie). Dit wordt bereikt door ‘
+differencing
+’ - het verschil bekijken t.o.v. de vorige waarde.
+Een ARIMA heeft 3 instelbare parameters (p, d, q). Dit zijn het aantal AR termen, het aantal keer
+differenceren
+en het aantal MA termen.
+Seasonal
+ARIMA heeft nog eens 4 parameters (P, D, Q, s) die hetzelfde werken maar dan met een
+seasonal
+lag (
+bijv
+s=12 voor jaarpatroon met maandelijkse data).
+
+--- SLIDE 55 ---
+Anomalies
+55
+
+--- SLIDE 56 ---
+Anomalie Detectie in Timeseries
+https://www.xenonstack.com/blog/anomaly-detection-of-time-series-data-using-machine-learning-deep-learning
+Anomaly
+is defined as something that deviates from the normal
+behaviour
+or what is expected. For more clarity let’s take an example of bank transaction:
+Suppose you have a savings bank account and you mostly withdraw $
+10,000
+but, one day $6,00,000 amount is withdrawn from your account. This is unusual activity for your withdrawal history and would thus be categorized as an anomaly for bank employees.
+The anomaly is a kind of contradictory observation in the data. It gives the proof that certain model or assumption does not fit into the problem statement.
+
+--- SLIDE 57 ---
+Laten we eens naar deze multivariate serie kijken
+Kijken naar de correlatie tussen de data
+Kijken naar
+anomalies
+// flat-
+liners
+in een serie t.o.v. verandering ergens anders
+Kijken naar pieken en
+de tijd tussen pieken
+kijken naar het
+frequentiedomein
+ipv
+het tijdsdomein
+https://docs.microsoft.com/en-us/azure/cognitive-services/anomaly-detector/overview-multivariate
+
+--- SLIDE 58 ---
+Verschillende type
+anomalies
+https://www.xenonstack.com/blog/anomaly-detection-of-time-series-data-using-machine-learning-deep-learning
+Point Anomalies -
+Als een specifieke waarde binnen de dataset afwijkend is ten opzichte van de volledige data, dan wordt dit een puntanomalie genoemd.
+Contextual Anomalies -
+Als het voorkomen van data afwijkend is voor specifieke omstandigheden, dan staat het bekend als een Contextuele Anomalie. Bijvoorbeeld, de anomalie treedt op in een specifiek interval van een periode.
+Collective Anomalies -
+Als een collectieve gebeurtenis van data afwijkend is ten opzichte van de rest van de dataset, dan staat het bekend als een collectieve anomalie. Bijvoorbeeld, het doorbreken van de trend die is waargenomen in ECG.
+
+--- SLIDE 59 ---
+Nog een voorbeeld
+https://www.slideshare.net/LalitJain29/credit-card-fraud-detection-anomaly-detection
